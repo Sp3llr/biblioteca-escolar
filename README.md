@@ -2,6 +2,12 @@
 
 Sistema para organizar os livros, os usuários e os empréstimos de uma biblioteca escolar. O projeto usa páginas HTML com Flask e grava os dados no PostgreSQL.
 
+## Identificação
+
+- **Aluno:** Manoel Ricardo Santana Belo
+- **Turma:** 3º A
+- **Professor:** Eduardo Hernandes
+
 ## O que dá para fazer
 
 - Entrar com e-mail e senha e sair da conta.

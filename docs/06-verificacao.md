@@ -24,4 +24,4 @@ Os cinco PDFs foram renderizados e revisados. O DER em imagem corresponde às ta
 
 ## Limites da verificação
 
-O comando Docker Compose e o fluxo do GitHub Actions foram preparados, mas não executados neste ambiente. O banco e a aplicação foram testados diretamente. A suíte deverá rodar novamente no GitHub após a publicação.
+O comando Docker Compose foi preparado, mas não executado neste ambiente. O banco e a aplicação foram testados diretamente. Após a publicação, o GitHub Actions executou a suíte com sucesso no PostgreSQL 17. A execução pode ser consultada na aba Actions do repositório.

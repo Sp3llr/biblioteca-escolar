@@ -148,19 +148,19 @@ Sem `TEST_DATABASE_URL` os testes são marcados como ignorados. Os cenários man
 6. Mostre o relatório: inicialmente **O Pequeno Príncipe** aparece com 2 empréstimos. Baixe o CSV.
 7. Cadastre outro livro sem empréstimos e exclua, para demonstrar essa função.
 
-## Publicar no GitHub
+## Repositório no GitHub
 
-Crie um repositório vazio chamado `biblioteca-escolar` na sua conta, sem adicionar README pelo site. Dentro desta pasta, substitua `SEU_USUARIO` pelo seu login:
+O projeto está disponível em https://github.com/Sp3llr/biblioteca-escolar.
+
+Para baixar pelo Git:
 
 ```bash
-git init -b main
-git add .
-git commit -m "Adiciona sistema de biblioteca escolar"
-git remote add origin https://github.com/SEU_USUARIO/biblioteca-escolar.git
-git push -u origin main
+git clone https://github.com/Sp3llr/biblioteca-escolar.git
+cd biblioteca-escolar
+docker compose up --build
 ```
 
-Também dá para usar o GitHub Desktop: **File > Add Local Repository > Create a repository here**, conferir os arquivos, fazer o commit e usar **Publish repository**.
+Também dá para usar **Code > Download ZIP** no GitHub, extrair a pasta e seguir as instruções de execução acima.
 
 ## Escopo
 

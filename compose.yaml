@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: biblioteca
+      POSTGRES_PASSWORD: biblioteca
+      POSTGRES_DB: biblioteca
+    volumes:
+      - dados_biblioteca:/var/lib/postgresql/data
+      - ./banco/biblioteca.sql:/docker-entrypoint-initdb.d/01-biblioteca.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U biblioteca -d biblioteca"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      DATABASE_URL: postgresql://biblioteca:biblioteca@db:5432/biblioteca
+      SECRET_KEY: ${SECRET_KEY:-chave-local-da-avaliacao-trocar-fora-da-demonstracao}
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  dados_biblioteca:

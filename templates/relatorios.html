@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<div class="cabecalho"><div><span class="etiqueta">RELATÓRIOS</span><h1>Livros mais emprestados</h1><p>O ranking considera todos os empréstimos, inclusive os devolvidos.</p></div><a class="botao" href="{{ url_for('relatorios', formato='csv') }}">Baixar CSV</a></div>
+<section class="cartao"><h2>Ranking do acervo</h2><div class="rolagem"><table><thead><tr><th>Posição</th><th>Livro</th><th>Autor</th><th>Empréstimos</th></tr></thead><tbody>
+{% for l in ranking %}<tr><td>{{ loop.index }}</td><td>{{ l.titulo }}</td><td>{{ l.autor }}</td><td><b>{{ l.total }}</b></td></tr>{% else %}<tr><td colspan="4">Nenhum livro cadastrado.</td></tr>{% endfor %}
+</tbody></table></div><small>Em caso de empate, os livros aparecem em ordem alfabética.</small></section>
+<section class="cartao"><h2>Relatório geral de empréstimos</h2><div class="rolagem"><table><thead><tr><th>Usuário</th><th>Livro</th><th>Empréstimo</th><th>Previsão</th><th>Devolução</th></tr></thead><tbody>
+{% for e in historico %}<tr><td>{{ e.nome }}</td><td>{{ e.titulo }}</td><td>{{ e.data_emprestimo|data_br }}</td><td>{{ e.data_prevista|data_br }}</td><td>{{ e.data_devolucao|data_br }}</td></tr>{% else %}<tr><td colspan="5">Nenhum empréstimo registrado.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

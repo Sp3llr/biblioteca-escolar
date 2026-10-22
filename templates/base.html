@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Biblioteca Escolar{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+  {% if session.get('id_usuario') %}
+  <header class="topo"><a class="marca" href="{{ url_for('painel') }}">Biblioteca <span>Escolar</span></a>
+    <span class="saudacao">Olá, {{ session.nome }}</span>
+  </header>
+  <nav aria-label="Menu principal">
+    {% for rota, rotulo in [('painel','Início'),('livros','Livros'),('usuarios','Usuários'),('emprestimos','Empréstimos'),('relatorios','Relatórios')] %}
+    <a href="{{ url_for(rota) }}" {% if request.endpoint == rota %}class="ativo" aria-current="page"{% endif %}>{{ rotulo }}</a>
+    {% endfor %}
+    <form method="post" action="{{ url_for('sair') }}"><input type="hidden" name="csrf" value="{{ session.csrf }}"><button class="sair" type="submit">Sair</button></form>
+  </nav>
+  {% endif %}
+  <main class="{% if request.endpoint == 'login' %}area-login{% else %}conteudo{% endif %}">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% for tipo, mensagem in mensagens %}<div class="aviso {{ tipo }}" role="alert">{{ mensagem }}</div>{% endfor %}
+    {% endwith %}
+    {% block conteudo %}{% endblock %}
+  </main>
+  <footer>Biblioteca Escolar · Projeto de avaliação prática</footer>
+</body>
+</html>

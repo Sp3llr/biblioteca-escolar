@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block titulo %}Entrar | Biblioteca Escolar{% endblock %}
+{% block conteudo %}
+<section class="cartao login">
+  <span class="etiqueta">BIBLIOTECA ESCOLAR</span>
+  <h1>Bem-vindo de volta</h1><p>Entre para organizar o acervo e os empréstimos.</p>
+  <form method="post">
+    <input type="hidden" name="csrf" value="{{ session.csrf }}">
+    <label for="email">E-mail</label>
+    <input id="email" name="email" type="email" required maxlength="150" autocomplete="username" value="{{ request.form.get('email','') }}" placeholder="seuemail@escola.com">
+    <label for="senha">Senha</label>
+    <input id="senha" name="senha" type="password" required autocomplete="current-password">
+    <div class="acoes"><button type="submit">Entrar</button><button type="button" class="secundario" onclick="document.getElementById('email').value='';document.getElementById('senha').value='';document.getElementById('email').focus()">Limpar</button></div>
+  </form>
+</section>
+{% endblock %}

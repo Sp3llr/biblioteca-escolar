@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<span class="etiqueta">PESSOAS</span><h1>Usuários</h1><p>Cadastre quem vai utilizar a biblioteca.</p>
+<section class="cartao"><h2>Novo usuário</h2><form method="post" class="grade-form">
+<input type="hidden" name="csrf" value="{{ session.csrf }}">
+<div><label for="nome">Nome</label><input id="nome" name="nome" maxlength="100" required value="{{ request.form.get('nome','') }}"></div>
+<div><label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="150" required value="{{ request.form.get('email','') }}"></div>
+<div><label for="senha">Senha (mínimo 6 caracteres)</label><input id="senha" name="senha" type="password" minlength="6" required autocomplete="new-password"></div>
+<div class="linha-inteira"><button type="submit">Cadastrar usuário</button></div></form></section>
+<section class="cartao"><h2>Pessoas cadastradas</h2><div class="rolagem"><table><thead><tr><th>ID</th><th>Nome</th><th>E-mail</th></tr></thead><tbody>
+{% for u in usuarios %}<tr><td>{{ u.id_usuario }}</td><td>{{ u.nome }}</td><td>{{ u.email }}</td></tr>{% else %}<tr><td colspan="3">Nenhum usuário cadastrado.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

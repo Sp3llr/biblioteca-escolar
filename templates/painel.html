@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<div class="cabecalho"><div><span class="etiqueta">VISÃO GERAL</span><h1>Um dia de cada leitura</h1><p>Acompanhe o movimento da biblioteca.</p></div><a class="botao" href="{{ url_for('emprestimos') }}">Novo empréstimo</a></div>
+<div class="indicadores">
+  <article class="cartao"><p>Títulos cadastrados</p><strong>{{ numeros.livros }}</strong><small>Livros diferentes no acervo</small></article>
+  <article class="cartao"><p>Empréstimos ativos</p><strong>{{ numeros.ativos }}</strong><small>Livros aguardando devolução</small></article>
+  <article class="cartao"><p>Usuários cadastrados</p><strong>{{ numeros.usuarios }}</strong><small>Pessoas na biblioteca</small></article>
+</div>
+<section class="cartao"><h2>Últimos empréstimos</h2>
+<div class="rolagem"><table><thead><tr><th>Livro</th><th>Usuário</th><th>Previsão</th><th>Situação</th></tr></thead><tbody>
+{% for e in recentes %}<tr><td>{{ e.titulo }}</td><td>{{ e.nome }}</td><td>{{ e.data_prevista|data_br }}</td><td><span class="status">{{ 'Devolvido' if e.data_devolucao else 'Ativo' }}</span></td></tr>{% else %}<tr><td colspan="4">Nenhum empréstimo registrado.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

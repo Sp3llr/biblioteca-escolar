@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<span class="etiqueta">CIRCULAÇÃO</span><h1>Empréstimos</h1><p>Registre a saída dos livros e a devolução de cada exemplar.</p>
+<section class="cartao"><h2>Registrar empréstimo</h2><form method="post" class="grade-form">
+<input type="hidden" name="csrf" value="{{ session.csrf }}">
+<div><label for="id_usuario">Usuário</label><select id="id_usuario" name="id_usuario" required><option value="">Selecione</option>{% for u in usuarios %}<option value="{{ u.id_usuario }}" {{ 'selected' if request.form.get('id_usuario') == u.id_usuario|string else '' }}>{{ u.nome }}</option>{% endfor %}</select></div>
+<div><label for="id_livro">Livro</label><select id="id_livro" name="id_livro" required><option value="">Selecione</option>{% for l in livros %}<option value="{{ l.id_livro }}" {% if l.quantidade == 0 %}disabled{% endif %} {{ 'selected' if request.form.get('id_livro') == l.id_livro|string else '' }}>{{ l.titulo }} ({{ l.quantidade }} disponíveis)</option>{% endfor %}</select></div>
+<div><label for="data_emprestimo">Data do empréstimo</label><input id="data_emprestimo" name="data_emprestimo" type="date" max="{{ hoje }}" required value="{{ request.form.get('data_emprestimo',hoje|string) }}"></div>
+<div><label for="data_prevista">Data prevista para devolução</label><input id="data_prevista" name="data_prevista" type="date" required value="{{ request.form.get('data_prevista','') }}"></div>
+<div class="linha-inteira"><button type="submit">Registrar empréstimo</button></div></form></section>
+<section class="cartao"><h2>Histórico e devoluções</h2>
+<form method="get" class="busca"><label for="status">Mostrar</label><select name="status" id="status">{% for valor, texto in [('todos','Todos'),('ativos','Ativos'),('devolvidos','Devolvidos'),('atrasados','Atrasados')] %}<option value="{{ valor }}" {{ 'selected' if valor==filtro else '' }}>{{ texto }}</option>{% endfor %}</select><button type="submit">Filtrar</button></form>
+<div class="rolagem"><table><thead><tr><th>Usuário / livro</th><th>Empréstimo</th><th>Previsão</th><th>Devolução</th><th>Ação / situação</th></tr></thead><tbody>
+{% for e in emprestimos %}<tr><td><b>{{ e.nome }}</b><br>{{ e.titulo }}</td><td>{{ e.data_emprestimo|data_br }}</td><td>{{ e.data_prevista|data_br }}</td><td>{{ e.data_devolucao|data_br }}</td><td>
+{% if e.data_devolucao %}<span class="status">Devolvido</span>{% else %}{% if e.data_prevista < hoje %}<span class="atrasado">Atrasado</span>{% endif %}<form method="post" action="{{ url_for('devolver', codigo=e.id_emprestimo) }}" onsubmit="return confirm('Confirmar que o exemplar foi devolvido?')"><input type="hidden" name="csrf" value="{{ session.csrf }}"><button type="submit">Devolver</button></form>{% endif %}</td></tr>
+{% else %}<tr><td colspan="5">Nenhum empréstimo encontrado.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}
